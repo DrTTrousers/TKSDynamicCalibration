@@ -22,6 +22,7 @@ calibrate <- function(file = sampleextract(), modselect = model){
   map <- merge(file, prd, by = "frame") %>%
          select_if(negate(is.character)) %>%
          mutate_at(vars(contains("X")),funs(./Mean_Raw)) %>%
+         mutate_all(~replace(., is.nan(.), 0)) %>%
          mutate_at(vars(contains("X")),funs(.*Cal_Sum)) %>%
          mutate_at(vars(contains("X")),funs(./1.6129))
 
@@ -218,9 +219,9 @@ syncplot <- function(x = tek_sum, title = "Peak Synchronisation Check"){
 #' Useful graphical tool to check autofit() has correctly minimised R squared and fit the data
 #' Best combined with syncplot() as two halves of the same analysis, using plotly.
 #' Can be partial bundled.
-#' @param tek TekScan summary from indexer() or autofit()
+#' @param tek TekScan summary from tidytek() or autofit()
 #' @param sim Simulator summary from simextract()
-#' @param modselect model output of autofit()
+#' @param modselect model output of calmodel() or autofit()
 #'
 #' @return
 #' @export
@@ -255,7 +256,7 @@ modplot <- function(tek = tek_sum, sim = sim_sum, modselect = model){
 #'
 #' @examples
 #' sumdataframe()
-sumdataframe <- function(file = sampleextract(samplefile),
+sumdataframe <- function(file = sampleextract(),
                          knee = "rtkn",
                          calibrationmodel = model){
   l <- "Lateral"
@@ -289,42 +290,17 @@ sumdataframe <- function(file = sampleextract(samplefile),
 #' Summary of the calibrated data as a table. Suited for presentation with rounding and detailed headers
 #' Includes slicers for interaction after knitting
 #' Could be a wrapper function for sumdataframe?
-#' @param file TekScan recording. Defaults to output of sampleextract()
-#' @param calmodel model for calibration as in calibrate()
-#' @param knee right or left knee, dictates labelling
+#' @param df a dataframe to be tidied up for knit, defaults to sumdataframe() output.
 #'
 #' @return
 #' @export
 #'
 #' @examples
-sumtab <- function(file = sampleextract(samplefile),
-                   calmodel = model,
-                   knee = "rtkn"){
-  l <- "Lateral"
-  m <- "Medial"
-  k <- quo(c(rep(m, times=(length(variable)/2)),
-             rep(l, times=(length(variable)/2))))
+#' sumtab(sumdataframe())
+sumtab <- function(df = sumdataframe()){
 
-  if (knee == "ltkn"){
-    k <- quo(c(rep(l, times=(length(variable)/2)),
-               rep(m, times=(length(variable)/2))))
-  }
-
-  datatable(
-    calibrate(file, calmodel) %>%
-      mutate(rownum = rep(1:26, times=(length(X1)/26))) %>%
-      select(-Mean_Raw, -Cal_Sum) %>%
-      mutate(frame = as.factor(frame)) %>%
-      melt(id.vars =c("frame", "rownum")) %>%
-      mutate(side = !! k) %>%
-      group_by(frame, side) %>%
-      summarise("Total Force (N)" = (sum(value[value!=0]*1.6129)),
-                "Average Pressure (MPa)" = mean(value[value!=0]),
-                "Peak Pressure (MPa)" = max(value),
-                "Loaded area (mm^2)" = (length(value[value!=0])*1.6129)) %>%
-      mutate_all(~replace(., is.nan(.), 0)) %>%
+  datatable(df %>%
       mutate_if(is.numeric, round, 3) %>%
-      left_join(., tek_ind, by="frame") %>%
       rename("Tibial Side" = side,
              "Tekscan Frame" = frame),
     filter = "top",

@@ -3,15 +3,11 @@ load(savefile)
 
 if(!exists("simfile")){
   simfile <- c(strsplit(list.files(path = "../data/KneeSimulator/271021_rtkn1307f/txts", pattern = "*KP1.txt",
-                                   full.names = T), split = " "),
-               strsplit(list.files(path = "../data/KneeSimulator/271021_rtkn1307f/txts", pattern = "*KP2.txt",
                                    full.names = T), split = " "))
 }
 
 if(!exists("tekfile")){
   tekfile <- c(strsplit(list.files(path = "../data/Tekscan/271021_rtkn1307f/", pattern = "Def_rtkn",
-                                   full.names = T), split = " "),
-               strsplit(list.files(path = "../data/Tekscan/271021_rtkn1307f/", pattern = "7f_Def_",
                                    full.names = T), split = " "))
 }
 
