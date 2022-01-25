@@ -8,7 +8,9 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' find_peaks()
+#' }
 find_peaks <- function (x, m = 3){
   shape <- diff(sign(diff(x, na.pad = FALSE)))
   pks <- sapply(which(shape < 0), FUN = function(i){
@@ -31,18 +33,20 @@ find_peaks <- function (x, m = 3){
 #' @param tek Output of the TekScan extractor function. Defaults to calling tekextract()
 #' @param numcycle a variable telling the operation how many cycles were recorded
 #' @param peaknum identifies which peak to use based on its position in the output vector of find_peaks
-#' @param modifier a custom correction variable for minor adjustment of the position.
+#' @param mod a custom correction variable for minor adjustment of the position.
 #'
 #' @return
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' indexer()
+#' }
 indexer <- function(sim = simextract(),
                     tek = tekextract(),
                     numcycle = 5,
                     peaknum = 1,
-                    modifier = 0){
+                    mod = 0){
 
   t_peak <- find_peaks(tek$Sum_Raw, m=15)[peaknum]
   s_peak <- find_peaks(sim$Mean_AF, m=15)[1] - mod
@@ -102,7 +106,9 @@ indexer <- function(sim = simextract(),
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' calmodel(tek_sum, sim_sum)
+#' }
 calmodel <- function(tek = tek_sum, sim = sim_sum){
   lm(Mean_AF ~0+poly(Mean_Raw, 3, raw = T),
      data=merge(tek, sim, by="Index"))
@@ -119,6 +125,9 @@ calmodel <- function(tek = tek_sum, sim = sim_sum){
 #' @export
 #'
 #' @examples
+#' \dontrun{
+#' tidytek()
+#' }
 tidytek <- function(x = indexer(),
                     SumOrInd = "S"){
   t <- tolower(SumOrInd)
@@ -134,7 +143,8 @@ tidytek <- function(x = indexer(),
   }
 }
 
-#' Autofitting function for calibration model
+
+#' Autofit function for calibration model
 #'
 #' This function iteratively controls the indexer parameters to optimise the calibration model
 #' There are two loops, one which sets the peak number between 1 and the value of attempts,
@@ -154,7 +164,9 @@ tidytek <- function(x = indexer(),
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' autofit()
+#' }
 autofit <- function(t = tekextract(),
                     s = simextract(),
                     attempts = 6,
@@ -169,9 +181,9 @@ autofit <- function(t = tekextract(),
     peak <- peak+1
     tryCatch({
       tek_sum <- tidytek(indexer(sim = s, tek = t, peaknum = peak, mod = fudge, numcycle = cycles),"s")
-      tek_ind <- tidytek(indexer(sim = a, tek = t, peaknum = peak, mod = fudge, numcycle = cycles),"i")
+      tek_ind <- tidytek(indexer(sim = s, tek = t, peaknum = peak, mod = fudge, numcycle = cycles),"i")
 
-      model <- calmodel(tek_sum, a)
+      model <- calmodel(tek_sum, s)
 
       minRsq <- summary(model)$adj.r.squared},
 
@@ -190,10 +202,10 @@ autofit <- function(t = tekextract(),
     while(minRsq < target){
 
       tryCatch({
-        tek_sum <- tidytek(indexer(sim = a, tek = t, peaknum = peak, mod = fudge, numcycle = cycles),"s")
-        tek_ind <- tidytek(indexer(sim = a, tek = t, peaknum = peak, mod = fudge, numcycle = cycles),"i")
+        tek_sum <- tidytek(indexer(sim = s, tek = t, peaknum = peak, mod = fudge, numcycle = cycles),"s")
+        tek_ind <- tidytek(indexer(sim = s, tek = t, peaknum = peak, mod = fudge, numcycle = cycles),"i")
 
-        model <- calmodel(tek_sum, a)
+        model <- calmodel(tek_sum, s)
 
         minRsq <- summary(model)$adj.r.squared},
 

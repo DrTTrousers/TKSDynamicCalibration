@@ -7,8 +7,14 @@
 #'
 #' @return
 #' @export
+#' @importFrom grDevices rainbow
+#' @importFrom graphics frame
+#' @importFrom stats lm predict
+#' @importFrom utils read.delim
 #' @examples
+#' \dontrun{
 #' simextract()
+#' }
 simextract <- function(file = simfile, skiptorow = 3){
   read.delim(file, skip=(skiptorow-1), stringsAsFactors = FALSE, sep = "\t") %>%
     select(Index, Stn.1.AF.Load) %>%
@@ -29,7 +35,9 @@ simextract <- function(file = simfile, skiptorow = 3){
 #' @return
 #' @export
 #' @examples
+#' \dontrun{
 #' tekextract()
+#' }
 tekextract <- function(file = tekfile, headerrows = 24){
   read_csv(file,
            col_names = FALSE,
@@ -56,7 +64,9 @@ tekextract <- function(file = tekfile, headerrows = 24){
 #' @return
 #' @export
 #' @examples
+#' \dontrun{
 #' sampleextract()
+#' }
 sampleextract <- function(file = samplefile, headerrows = 24){
   read_csv(file,
            col_names = FALSE,

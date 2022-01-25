@@ -9,7 +9,9 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' calibrate()
+#' }
 calibrate <- function(file = sampleextract(), modselect = model){
   prd <- file %>%
          select_if(negate(is.character)) %>%
@@ -45,7 +47,9 @@ calibrate <- function(file = sampleextract(), modselect = model){
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' tekplot2()
+#' }
 tekplot2 <- function(file = sampleextract(),
                      calmodel = model,
                      knee = "rtkn",
@@ -195,8 +199,10 @@ tekplot2 <- function(file = sampleextract(),
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' syncplot()
 #' subplot(syncplot(), modplot(), nrows=2) %>% partial_bundle()
+#' }
 syncplot <- function(x = tek_sum, title = "Peak Synchronisation Check"){
   ggplotly(
     x %>% melt (id.vars = "Index") %>%
@@ -227,8 +233,10 @@ syncplot <- function(x = tek_sum, title = "Peak Synchronisation Check"){
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' modplot()
 #' subplot(syncplot(), modplot(), nrows=2) %>% partial_bundle()
+#' }
 modplot <- function(tek = tek_sum, sim = sim_sum, modselect = model){
   merged <- merge(tek, sim, by="Index") %>%
     mutate(mod_out = predict(modselect, .))
@@ -255,7 +263,9 @@ modplot <- function(tek = tek_sum, sim = sim_sum, modselect = model){
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' sumdataframe()
+#' }
 sumdataframe <- function(file = sampleextract(),
                          knee = "rtkn",
                          calibrationmodel = model){
@@ -296,7 +306,9 @@ sumdataframe <- function(file = sampleextract(),
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' sumtab(sumdataframe())
+#' }
 sumtab <- function(df = sumdataframe()){
 
   datatable(df %>%
