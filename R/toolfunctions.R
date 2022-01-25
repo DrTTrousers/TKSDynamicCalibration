@@ -9,7 +9,7 @@
 #   Test Package:              'Ctrl + Shift + T'
 
 
-#' Title
+#' Basic import namespace populator
 #'
 #' @return
 #' @export
@@ -24,4 +24,5 @@
 setup <- function(){
   print("Imported Dependencies")
 }
+
 
