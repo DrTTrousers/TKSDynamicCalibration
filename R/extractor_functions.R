@@ -11,6 +11,7 @@
 #' @importFrom graphics frame
 #' @importFrom stats lm predict
 #' @importFrom utils read.delim
+#' @importFrom tidyr drop_na
 #' @examples
 #' \dontrun{
 #' simextract()

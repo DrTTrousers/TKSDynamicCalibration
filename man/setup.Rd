@@ -2,7 +2,7 @@
 % Please edit documentation in R/toolfunctions.R
 \name{setup}
 \alias{setup}
-\title{Title}
+\title{Basic import namespace populator}
 \usage{
 setup()
 }
@@ -10,7 +10,7 @@ setup()
 
 }
 \description{
-Title
+Basic import namespace populator
 }
 \examples{
 setup()
