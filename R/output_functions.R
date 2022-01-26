@@ -73,6 +73,8 @@ tekplot2 <- function(file = sampleextract(),
     select(-Mean_Raw, -Cal_Sum) %>%
     mutate(rownum = rep(1:26, times=(length(X1)/26)))
 
+  ul <- max(ceiling(c %>% select(-frame, -rownum)))
+
   p1<- c %>% group_by(frame) %>%
     select(-rownum) %>%
     summarise(across(where(is.numeric), max)) %>% #each column max value per frame.
@@ -80,7 +82,7 @@ tekplot2 <- function(file = sampleextract(),
     ggplot(aes(as.numeric(variable), value, frame=frame))+
     geom_point()+
     theme_bw()+
-    ylim(0, 10)
+    ylim(0, ul)
 
   c2 <- c %>% mutate(rownum = rep(1:26, times=(length(X1)/26))) %>%
     melt(id.vars=c("frame", "rownum")) %>%
@@ -96,7 +98,7 @@ tekplot2 <- function(file = sampleextract(),
     geom_point()+
     coord_flip()+
     theme_bw()+
-    ylim(0, 10)
+    ylim(0, ul)
 
   p2_m<- c2%>%
     filter(side==m) %>%
@@ -107,7 +109,7 @@ tekplot2 <- function(file = sampleextract(),
     geom_point()+
     coord_flip()+
     theme_bw()+
-    ylim(0, 10)
+    ylim(0, ul)
 
   x <- c2 %>% select(-rownum) %>% group_by(frame, variable, side) %>%
     summarise(across(where(is.numeric), max)) %>%
