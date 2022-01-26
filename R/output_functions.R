@@ -45,7 +45,7 @@ calibrate <- function(file = sampleextract(), modselect = model){
 #'
 #' @return
 #' @export
-#'
+#' @importFrom purrr negate
 #' @examples
 #' \dontrun{
 #' tekplot2()
