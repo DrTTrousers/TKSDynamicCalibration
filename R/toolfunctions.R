@@ -17,6 +17,7 @@
 #' @import readr
 #' @import DT
 #' @import ggplot2
+#' @import reshape2
 #' @rawNamespace import(plotly, except = last_plot)
 #'
 #' @examples

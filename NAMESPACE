@@ -21,6 +21,7 @@ import(ggplot2)
 import(plotly, except = last_plot)
 
 import(readr)
+import(reshape2)
 importFrom(grDevices,rainbow)
 importFrom(graphics,frame)
 importFrom(stats,lm)
