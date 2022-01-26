@@ -142,7 +142,7 @@ tekplot2 <- function(file = sampleextract(),
           axis.ticks = element_blank())+
     scale_fill_gradientn(colours = rev(rainbow(5)),
                          name = "MPa",
-                         limits = c(0, 10))
+                         limits = c(0, ul))
 
   ax <- list(
     title = "",
