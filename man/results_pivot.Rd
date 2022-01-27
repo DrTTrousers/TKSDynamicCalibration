@@ -4,10 +4,12 @@
 \alias{results_pivot}
 \title{Results long format}
 \usage{
-results_pivot(df = results)
+results_pivot(df = results, s = "Medial")
 }
 \arguments{
 \item{df}{results table or list of results tables to be produced.}
+
+\item{s}{indicates which side to filter the results from}
 }
 \value{
 
