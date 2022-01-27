@@ -99,6 +99,12 @@ featbarplot <- function(data = "data",
 #' metric_labeller()
 #' }
 metric_labeller <- function(variable, value){
+
+  metric_names <- list('LA' = "Loaded Area (mm^2)",
+                       'mP' = "Mean Pressure (MPa)",
+                       'pP' = "Peak Pressure (MPa)",
+                       'TF' = "Total Force (N)")
+
   return(unlist(metric_names[value]))
 }
 
