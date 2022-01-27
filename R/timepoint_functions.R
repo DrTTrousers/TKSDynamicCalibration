@@ -31,6 +31,7 @@ simext_full <- function(file = simfile, skiptorow = 3){
 #'
 #' @return
 #' @export
+#' @importFrom tidyr pivot_longer
 #'
 #' @examples
 #' \dontrun{
