@@ -28,6 +28,7 @@ simext_full <- function(file = simfile, skiptorow = 3){
 #' Takes the calibrated results, or optionally results list and reformats it to a long data structure to facilitate
 #' plotting. Uses the "Position" variable as identifiers. Labels the variables in a standard format for other functions.
 #' @param df results table or list of results tables to be produced.
+#' @param s indicates which side to filter the results from
 #'
 #' @return
 #' @export
@@ -37,7 +38,7 @@ simext_full <- function(file = simfile, skiptorow = 3){
 #' \dontrun{
 #' results_pivot()
 #' }
-results_pivot <- function(df = results){
+results_pivot <- function(df = results, s = "Medial"){
   res <- bind_rows(df, .id = "Position") %>% ungroup()
 
   names(res)[4:7] <- c("TF", "mP", "pP", "LA")
