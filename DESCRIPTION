@@ -17,4 +17,7 @@ Imports:
         readr,
         DT,
         plotly,
-        ggplot2
+        ggplot2,
+        purrr,
+        reshape2,
+        tidyr
