@@ -46,8 +46,8 @@ results_pivot <- function(df = results, s = "Medial"){
   res_long <-  res %>%
     filter(side == s) %>%
     group_by(Index, Position) %>%
-    summarise(across(where(is.numeric), mean), .groups = "keep") %>%
     select(-frame, -side) %>%
+    summarise(across(everything(), mean), .groups = "keep") %>%
     pivot_longer(!c(Index, Position), names_to = "x", values_to = "y")
 }
 
