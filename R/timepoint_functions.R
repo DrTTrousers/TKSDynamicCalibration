@@ -192,6 +192,8 @@ v <- varaxis %>%
    geom_vline(data = filter(varaxis, x =="Stn.1.FE.Pos"), aes(xintercept = fe[2]/128), linetype = "dashed", colour = "red")+
    geom_vline(data = filter(varaxis, x =="Stn.1.FE.Pos"), aes(xintercept = fe[3]/128), linetype = "dashed", colour = "red")+
    xlab("Time (s)")
+
+v
 }
 
 #' Tekscan plotter
