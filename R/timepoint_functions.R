@@ -57,6 +57,7 @@ results_pivot <- function(df = results, s = "Medial"){
 #' @param data the results values as a long variable format as set up using results_pivot()
 #' @param variable the intended variable to be examined
 #' @param timepoints a vector containing the index values to be plotted on the x axis
+#' @param title graph title as a string in quotes to label the plot
 #'
 #' @return
 #' @export
@@ -67,7 +68,8 @@ results_pivot <- function(df = results, s = "Medial"){
 #' }
 featbarplot <- function(data = "data",
                         variable = "LA, mP, pP, TF",
-                        timepoints = "c() vector"){
+                        timepoints = "c() vector",
+                        title = "Peaks in...."){
 
   target <- timepoints
   if(variable == "LA"){ yat <- "Loaded Area (mm^2)"}
@@ -84,7 +86,8 @@ featbarplot <- function(data = "data",
              position = position_dodge(width = 0.6))+
     theme_bw()+
     xlab("Time(s)")+
-    ylab(yat)
+    ylab(yat)+
+    ggtitle(title)
 }
 
 #' Metric labels

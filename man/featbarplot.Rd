@@ -7,7 +7,8 @@
 featbarplot(
   data = "data",
   variable = "LA, mP, pP, TF",
-  timepoints = "c() vector"
+  timepoints = "c() vector",
+  title = "Peaks in...."
 )
 }
 \arguments{
@@ -16,6 +17,8 @@ featbarplot(
 \item{variable}{the intended variable to be examined}
 
 \item{timepoints}{a vector containing the index values to be plotted on the x axis}
+
+\item{title}{graph title as a string in quotes to label the plot}
 }
 \value{
 
