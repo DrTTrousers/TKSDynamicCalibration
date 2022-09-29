@@ -172,7 +172,9 @@ varaxis <- df %>%
            pivot_longer(!Index, names_to = "x", values_to = "y")
 
 af <- find_peaks(filter(varaxis, x=="Stn.1.AF.Load")$y)-1
+af <- af*2
 fe <- find_peaks(filter(varaxis, x=="Stn.1.FE.Pos")$y)-1
+fe <- fe*2
 
 if(plot == FALSE){
   return(list(af, fe))
